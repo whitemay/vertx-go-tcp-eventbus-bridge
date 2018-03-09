@@ -65,14 +65,14 @@ func (eventBus *EventBus) Receive() (*Message, error) {
 //
 // This method is safe to use from concurrent goroutines.
 func (eventBus *EventBus) Publish(address string, headers, body interface{}) error {
-	return eventBus.send(newPublishMessage(address, nil, body))
+	return eventBus.send(newPublishMessage(address, headers, body))
 }
 
 // Send a message to an address.
 //
 // This method is safe to use from concurrent goroutines.
 func (eventBus *EventBus) Send(address string, headers, body interface{}) error {
-	return eventBus.send(newSendMessage(address, nil, nil, body))
+	return eventBus.send(newSendMessage(address, nil, headers, body))
 }
 
 // Send a message to an address, and also specify a destination for an expected response.
@@ -80,7 +80,7 @@ func (eventBus *EventBus) Send(address string, headers, body interface{}) error 
 //
 // This method is safe to use from concurrent goroutines.
 func (eventBus *EventBus) SendWithReplyAddress(address, replyAddress string, headers, body interface{}) error {
-	return eventBus.send(newSendMessage(address, replyAddress, nil, body))
+	return eventBus.send(newSendMessage(address, replyAddress, headers, body))
 }
 
 // Register this client to receive messages on a destination.
