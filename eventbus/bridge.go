@@ -38,12 +38,8 @@ type EventBus struct {
 // The address shall be specified as for 'net.Dial' connections, like 'somewhere.tld:port'.
 //
 // An EventBus pointer or an error are returned.
-func NewEventBus(address string) (*EventBus, error) {
-	connection, err := net.Dial("tcp", address)
-	if err != nil {
-		return nil, err
-	}
-	return &EventBus{connection, sync.Mutex{}}, nil
+func NewEventBus(connection net.Conn) *EventBus {
+	return &EventBus{connection, sync.Mutex{}}
 }
 
 // Closes the connection to a remote Vert.x application.
